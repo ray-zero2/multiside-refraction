@@ -9,6 +9,16 @@ export default class BackGround {
     this.time = 0;
   }
 
+  resize(resolution) {
+    this.resolution = resolution;
+    this.mesh.scale.set(this.resolution.wu, this.resolution.width, 1);
+  }
+
+  update(deltaTime) {
+    this.time += deltaTime;
+    // this.mesh.rotation.z += 0.001;
+  }
+
   createGeometry() {
     const geometry = new THREE.PlaneBufferGeometry();
     return geometry;
@@ -18,16 +28,6 @@ export default class BackGround {
     this.texture = await promiseTextureLoader(this.src);
     const material = new THREE.MeshBasicMaterial({ map: this.texture });
     return material;
-  }
-
-  resize(resolution) {
-    this.resolution = resolution;
-    this.mesh.scale.set(this.resolution.height * 2, this.resolution.width, 1);
-  }
-
-  update(deltaTime) {
-    this.time += deltaTime;
-    // this.mesh.rotation.z += 0.001;
   }
 
   async createMesh() {

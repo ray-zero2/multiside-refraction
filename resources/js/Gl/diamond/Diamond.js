@@ -28,31 +28,6 @@ export default class Diamond {
     this.time = 0;
   }
 
-  async createGeometry() {
-    const model = await promiseGLTFLoader(this.src);
-    // const mesh = model.scene.children[0].children[0].children[0].children[0];
-    const mesh = model.scene.children[0];
-    const geometry = mesh.geometry;
-    geometry.computeVertexNormals();
-    return geometry;
-  }
-
-  createMaterial() {
-    this.backFaceMaterial = new THREE.ShaderMaterial({
-      vertexShader: backfaceVs,
-      fragmentShader: backfaceFs,
-      side: THREE.BackSide,
-    });
-    this.refractionMaterial = new THREE.ShaderMaterial({
-      vertexShader: refractVs,
-      fragmentShader: refractFs,
-      uniforms: this.uniforms,
-    });
-
-    const material = this.refractionMaterial;
-    return material;
-  }
-
   resize(resolution) {
     this.resolution = resolution;
     this.uniforms.resolution.value = {
@@ -73,6 +48,30 @@ export default class Diamond {
     this.time += deltaTime;
     this.mesh.rotation.x = this.time / 6;
     this.mesh.rotation.y = this.time / 4;
+  }
+
+  async createGeometry() {
+    const model = await promiseGLTFLoader(this.src);
+    const mesh = model.scene.children[0];
+    const geometry = mesh.geometry;
+    geometry.computeVertexNormals();
+    return geometry;
+  }
+
+  createMaterial() {
+    this.backFaceMaterial = new THREE.ShaderMaterial({
+      vertexShader: backfaceVs,
+      fragmentShader: backfaceFs,
+      side: THREE.BackSide,
+    });
+    this.refractionMaterial = new THREE.ShaderMaterial({
+      vertexShader: refractVs,
+      fragmentShader: refractFs,
+      uniforms: this.uniforms,
+    });
+
+    const material = this.refractionMaterial;
+    return material;
   }
 
   async createMesh() {
