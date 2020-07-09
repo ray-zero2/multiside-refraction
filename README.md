@@ -1,7 +1,7 @@
 # learn-multiside-refraction
 with Three.js
 
-## page
+## demo
 https://ray-zero2.github.io/learn-multiside-refraction/public/index.html
 
 ## reference
